@@ -1,0 +1,7 @@
+[project]
+name = "scientific-expansion"
+version = "0.1.0"
+description = "Graph ML Project for Expanding Scientific Research"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
