@@ -4,4 +4,17 @@ version = "0.1.0"
 description = "Graph ML Project for Expanding Scientific Research"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "datasets>=4.0.0",
+    "matplotlib>=3.10.5",
+    "ogb>=1.3.6",
+    "pandas>=2.3.2",
+    "seaborn>=0.13.2",
+    "torch==2.3.1",
+    "torch-geometric>=2.6.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+]
