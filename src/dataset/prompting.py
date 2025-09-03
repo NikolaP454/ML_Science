@@ -53,6 +53,7 @@ class PromptGenerator:
             )
 
         question += "\n### Response:\n"
+        question += "<think>{}</think>\n"
         question += "<ANSWER><TITLE>{YOUR ANSWER HERE}</TITLE></ANSWER>"
 
         answer = node.get_prompt(answer_tag=True)
