@@ -5,9 +5,15 @@ from .data_structures import Graph
 
 class PromptGenerator:
     graph: Graph
+    base_prompt: str
 
-    def __init__(self, graph: Graph):
+    def __init__(self, graph: Graph, base_prompt: str | None = None):
         self.graph = graph
+
+        if base_prompt is None:
+            base_prompt = "You are a senior researcher."
+
+        self.base_prompt = base_prompt
 
     def __repr__(self) -> str:
         return f"PromptGenerator(graph={self.graph})"
@@ -34,7 +40,7 @@ class PromptGenerator:
             node_id, max_count=max_sources, seed=seed
         )
 
-        question = "You are a senior researcher. Given the following papers:\n"
+        question = f"{self.base_prompt} Given the following papers:".strip() + "\n"
 
         for source in sources:
             question += self.graph.get_node(source).get_prompt(

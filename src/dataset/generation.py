@@ -111,6 +111,7 @@ def generate_dataset(
     use_abstract: bool = False,
     max_sources: Union[int, None] = None,
     seed: int = 42,
+    base_prompt: str | None = None,
 ) -> Dataset:
     """Generate a dataset from the graph.
 
@@ -119,9 +120,10 @@ def generate_dataset(
     - use_abstract: Whether to use the abstract of the papers as input.
     - max_sources: The maximum number of source papers to consider.
     - seed: The random seed for reproducibility.
+    - base_prompt: The base prompt to use for the questions.
     """
 
-    prompter = PromptGenerator(graph)
+    prompter = PromptGenerator(graph, base_prompt=base_prompt)
     with_sources = graph.get_nodes_with_sources()
 
     dataset = dict(node_id=[], question=[], answer=[])
