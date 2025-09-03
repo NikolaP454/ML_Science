@@ -11,7 +11,7 @@ class PromptGenerator:
         self.graph = graph
 
         if base_prompt is None:
-            base_prompt = "You are a senior researcher."
+            base_prompt = "You are a senior researcher, tasked with generating new ideas for papers based on a list of papers as sources."
 
         self.base_prompt = base_prompt
 
@@ -40,15 +40,20 @@ class PromptGenerator:
             node_id, max_count=max_sources, seed=seed
         )
 
-        question = f"{self.base_prompt} Given the following papers:".strip() + "\n"
+        question = "Below is an instruction that describes a task, paired with an input that provides further context.\n"
+        question += "Write a response that appropriately completes the request.\n\n"
+        question += "### Instruction:\n"
+        question += f'{self.base_prompt}{" " if self.base_prompt else ""}Please answer the following question.\n\n'
+        question += "### Question:\n"
+        question += "Generate a new paper using the following papers as sources:\n"
 
         for source in sources:
             question += self.graph.get_node(source).get_prompt(
                 use_abstract=use_abstract
             )
 
-        question += "\nGenerate a new paper based on these sources. Return the paper in the following format:\n"
-        question += "<ANSWER><TITLE>YOUR ANSWER HERE</TITLE></ANSWER>"
+        question += "\n### Response:\n"
+        question += "<ANSWER><TITLE>{YOUR ANSWER HERE}</TITLE></ANSWER>"
 
         answer = node.get_prompt(answer_tag=True)
 
