@@ -52,7 +52,7 @@ def extract_arguments() -> argparse.Namespace:
     return argparser.parse_args()
 
 
-def create_experiment_data():
+def create_experiment_data() -> None:
     """Generate the experiment's data (train, validation and testing)."""
 
     # Extract Arguments
