@@ -14,3 +14,7 @@ data/
 
 # Local testing
 testing.ipynb
+
+# Error and output logs
+*.err
+*.out

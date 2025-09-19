@@ -1,0 +1,33 @@
+Bootstrap: docker
+From: pytorch/pytorch:2.8.0-cuda12.6-cudnn9-runtime
+
+%environment
+    export PYTHONUNBUFFERED=1
+    export DEBIAN_FRONTEND=noninteractive
+
+%post
+    apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        git \
+        ca-certificates \
+        && rm -rf /var/lib/apt/lists/*
+
+    # Upgrade pip and install uv
+    python -m pip install --upgrade pip setuptools wheel
+    python -m pip install --no-cache-dir uv
+
+    # Set working directory
+    mkdir -p /app
+
+%files
+    src /app
+    pyproject.toml /app
+    uv.lock /app
+    .python-version /app
+
+%post
+    cd /app
+    uv sync --no-dev
+
+%workdir /app
