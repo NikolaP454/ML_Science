@@ -21,10 +21,10 @@ From: pytorch/pytorch:2.8.0-cuda12.6-cudnn9-runtime
     mkdir -p /app
 
 %files
-    src /app
-    pyproject.toml /app
-    uv.lock /app
-    .python-version /app
+    ../src /app
+    ../pyproject.toml /app
+    ../uv.lock /app
+    ../.python-version /app
 
 %post
     cd /app
