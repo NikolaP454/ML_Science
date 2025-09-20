@@ -30,4 +30,3 @@ From: pytorch/pytorch:2.8.0-cuda12.6-cudnn9-runtime
     cd /app
     uv sync --no-dev
 
-%workdir /app

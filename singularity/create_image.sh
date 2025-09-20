@@ -10,4 +10,4 @@
 module load singularity
 
 # Build the image
-singularity build ml4science.sif ml4science.def
+singularity build --fakeroot ml4science.sif ml4science.def
