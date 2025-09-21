@@ -4,7 +4,7 @@
 #SBATCH --output=outputs/dataset_%j.out
 #SBATCH --error=errors/dataset_%j.err
 #SBATCH --cpus-per-task=16
-#SBATCH --nodelist=gpgpu02
+#SBATCH --nodelist=gpgpu01
 
 SIF_IMAGE="ml4science.sif"
 SCRIPT_PATH="../src/create_data.py"
