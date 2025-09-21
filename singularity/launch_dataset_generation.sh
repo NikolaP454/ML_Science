@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --ntasks-per-node=1
-#SBATCH --job-name=build_singularity
+#SBATCH --job-name=dataset_generation
 #SBATCH --output=outputs/dataset_%j.out
 #SBATCH --error=errors/dataset_%j.err
 #SBATCH --cpus-per-task=16
