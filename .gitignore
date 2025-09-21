@@ -18,3 +18,7 @@ testing.ipynb
 # Error and output logs
 *.err
 *.out
+
+# Experiments
+test_experiment/
+experiments/
