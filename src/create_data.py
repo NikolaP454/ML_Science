@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json, argparse
 
 import dataset
@@ -119,6 +119,8 @@ def create_experiment_data() -> None:
     train_ds.save_to_disk(os.path.join(DATASET_PATH, "train.jsonl"))
     validation_ds.save_to_disk(os.path.join(DATASET_PATH, "validation.jsonl"))
     testing_ds.save_to_disk(os.path.join(DATASET_PATH, "testing.jsonl"))
+
+    print("Data creation completed and saved.", file=sys.stderr)
 
 
 if __name__ == "__main__":

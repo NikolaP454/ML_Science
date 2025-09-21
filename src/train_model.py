@@ -1,4 +1,4 @@
-import os
+import os, sys
 import json
 import argparse
 import datasets
@@ -157,7 +157,6 @@ def finetune_model() -> None:
             gradient_accumulation_steps=4,
             warmup_steps=5,
             num_train_epochs=1,
-            max_steps=30,  # TODO: Remove
             learning_rate=2e-4,
             logging_steps=1,
             optim="adamw_8bit",
@@ -179,8 +178,12 @@ def finetune_model() -> None:
     os.makedirs(os.path.join(EXPERIMENT_PATH, "models", "sft_model"), exist_ok=True)
 
     # Save the LoRA adapter
-    model.save_pretrained(os.path.join(EXPERIMENT_PATH, "models", "sft_model"))
-    tokenizer.save_pretrained(os.path.join(EXPERIMENT_PATH, "models", "sft_model"))
+    model.save_pretrained(os.path.join(EXPERIMENT_PATH, "models", "sft_model", "model"))
+    tokenizer.save_pretrained(
+        os.path.join(EXPERIMENT_PATH, "models", "sft_model", "tokenizer")
+    )
+
+    print("Model finetuning completed and saved.", file=sys.stderr)
 
 
 if __name__ == "__main__":
