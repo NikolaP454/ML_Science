@@ -8,6 +8,8 @@
 
 SIF_IMAGE="ml4science.sif"
 SCRIPT_PATH="../src/train_model.py"
+UV_GROUP="finetuning"
 
 # --- Execute the script within the Singularity container ---
-singularity exec --nv $SIF_IMAGE uv run $SCRIPT_PATH  "$@"
+singularity exec --nv $SIF_IMAGE uv run \
+    --group $UV_GROUP $SCRIPT_PATH  "$@"
