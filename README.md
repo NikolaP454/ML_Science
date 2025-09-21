@@ -40,3 +40,19 @@ sbatch launch_dataset_generation.sh \
 ```
 
 *All arguments in [] are optional.
+
+## LLM Finetuning
+
+To finetune the desired LLM (using singularity) you will need to run the following commands:
+
+```sh
+cd singularity
+
+sbatch launch_llm_finetuning.sh \
+    --experiment_path PATH  \
+    [--model_name MODEL]    \
+    [--max_seq_length N]    \
+    [--load_in_4bit]
+```
+
+*All arguments in [] are optional.
