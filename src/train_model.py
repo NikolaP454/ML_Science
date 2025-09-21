@@ -118,9 +118,21 @@ def finetune_model() -> None:
     # Path Creation
     DATASET_PATH: str = os.path.join(EXPERIMENT_PATH, "datasets")
     CHECKPOINT_PATH: str = os.path.join(EXPERIMENT_PATH, "models", "checkpoints")
+    CONFIG_PATH: str = os.path.join(EXPERIMENT_PATH, "config")
 
     assert os.path.exists(DATASET_PATH), f"Missing datasets (path={DATASET_PATH})."
     os.makedirs(CHECKPOINT_PATH, exist_ok=True)
+
+    # Save Configs
+    with open(os.path.join(CONFIG_PATH, "config_finetuning.json"), "w") as f:
+        json.dump(
+            {
+                "model_name": MODEL_NAME,
+                "max_seq_length": MAX_SEQ_LENGTH,
+                "load_in_4bit": LOAD_IN_4BIT,
+            },
+            f,
+        )
 
     # Model Setup
     model, tokenizer = setup_model_and_tokenizer(
