@@ -5,6 +5,7 @@
 #SBATCH --error=errors/train_%j.err
 #SBATCH --cpus-per-task=16
 #SBATCH --nodelist=gpgpu01
+#SBATCH --gres=gpu:1
 
 SIF_IMAGE="ml4science.sif"
 SCRIPT_PATH="../src/train_model.py"
