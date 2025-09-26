@@ -30,6 +30,9 @@ def generate_graphs(data_path: str) -> tuple[Graph, Graph, Graph]:
     )
 
     # Load datasets
+    dataset_pyg = PygNodePropPredDataset(name=DATASET_NAME, root=data_path)
+    graph_pyg = dataset_pyg[0]
+
     paper_information_df = pd.read_csv(PAPER_INFORMATION_PATH, sep="\t")
     paper_information_df.columns = ["id", "title", "abstract"]
 
@@ -37,9 +40,6 @@ def generate_graphs(data_path: str) -> tuple[Graph, Graph, Graph]:
         mapping_df = pd.read_csv(f)
 
     mapping_df.columns = ["node_id", "paper_id"]
-
-    dataset_pyg = PygNodePropPredDataset(name=DATASET_NAME, root=data_path)
-    graph_pyg = dataset_pyg[0]
 
     # Create merged dataset
     merged_df = paper_information_df.merge(

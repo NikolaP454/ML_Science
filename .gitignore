@@ -6,11 +6,20 @@ dist/
 wheels/
 *.egg-info
 
-# Virtual environments
+# Environments
 .venv
+ml4science.sif
 
 # Data
 data/
 
 # Local testing
 testing.ipynb
+
+# Error and output logs
+*.err
+*.out
+
+# Experiments
+test_experiment/
+experiments/
