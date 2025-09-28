@@ -20,6 +20,12 @@ def extract_arguments() -> argparse.Namespace:
         help="Path to the experiment files.",
     )
     argparser.add_argument(
+        "--experiment_name",
+        type=str,
+        required=True,
+        help="Name of the experiment run.",
+    )
+    argparser.add_argument(
         "--model_name",
         type=str,
         default="Qwen/Qwen3-0.6B",
@@ -46,7 +52,7 @@ def preprocess_function(example: dict) -> dict:
     }
 
 
-def create_bnb_config(load_in_4bit: bool):
+def create_bnb_config(load_in_4bit: bool) -> BitsAndBytesConfig | None:
     """Create BitsAndBytesConfig for quantization."""
     if load_in_4bit:
         return BitsAndBytesConfig(
@@ -111,20 +117,27 @@ def finetune_model() -> None:
     # Extract Arguments
     args = extract_arguments()
     EXPERIMENT_PATH: str = args.experiment_path
+    EXPERIMENT_NAME: str = args.experiment_name
     MODEL_NAME: str = args.model_name
     MAX_SEQ_LENGTH: int = args.max_seq_length
     LOAD_IN_4BIT: bool = args.load_in_4bit
 
     # Path Creation
     DATASET_PATH: str = os.path.join(EXPERIMENT_PATH, "datasets")
-    CHECKPOINT_PATH: str = os.path.join(EXPERIMENT_PATH, "models", "checkpoints")
+    CURRENT_EXPERIMENT_PATH: str = os.path.join(
+        EXPERIMENT_PATH, "models", EXPERIMENT_NAME
+    )
+    CHECKPOINT_PATH: str = os.path.join(CURRENT_EXPERIMENT_PATH, "checkpoints")
     CONFIG_PATH: str = os.path.join(EXPERIMENT_PATH, "config")
 
     assert os.path.exists(DATASET_PATH), f"Missing datasets (path={DATASET_PATH})."
+    os.makedirs(CURRENT_EXPERIMENT_PATH, exist_ok=True)
     os.makedirs(CHECKPOINT_PATH, exist_ok=True)
 
     # Save Configs
-    with open(os.path.join(CONFIG_PATH, "config_finetuning.json"), "w") as f:
+    with open(
+        os.path.join(CONFIG_PATH, "config_finetuning_{EXPERIMENT_NAME}.json"), "w"
+    ) as f:
         json.dump(
             {
                 "model_name": MODEL_NAME,
@@ -174,13 +187,12 @@ def finetune_model() -> None:
     trainer.train()
 
     # Save the Model
-    os.makedirs(os.path.join(EXPERIMENT_PATH, "models"), exist_ok=True)
-    os.makedirs(os.path.join(EXPERIMENT_PATH, "models", "sft_model"), exist_ok=True)
+    os.makedirs(os.path.join(CURRENT_EXPERIMENT_PATH, "sft_model"), exist_ok=True)
 
     # Save the LoRA adapter
-    model.save_pretrained(os.path.join(EXPERIMENT_PATH, "models", "sft_model", "model"))
+    model.save_pretrained(os.path.join(CURRENT_EXPERIMENT_PATH, "sft_model", "model"))
     tokenizer.save_pretrained(
-        os.path.join(EXPERIMENT_PATH, "models", "sft_model", "tokenizer")
+        os.path.join(CURRENT_EXPERIMENT_PATH, "sft_model", "tokenizer")
     )
 
     print("Model finetuning completed and saved.", file=sys.stderr)

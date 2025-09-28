@@ -50,6 +50,7 @@ cd singularity
 
 sbatch launch_llm_finetuning.sh \
     --experiment_path PATH  \
+    --experiment_name NAME  \
     [--model_name MODEL]    \
     [--max_seq_length N]    \
     [--load_in_4bit]
